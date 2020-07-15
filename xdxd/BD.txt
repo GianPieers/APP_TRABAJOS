@@ -1,0 +1,128 @@
+
+
+-- CREACION DE BASE DE DATOS
+CREATE DATABASE BDTrabajos
+use BDTrabajos 
+--CREAMOS TABLA CON SUS COLUMNAS
+CREATE TABLE  tblTrabajos(idTrabajo int PRIMARY KEY NOT NULL,  
+   pais varchar(50) NOT NULL,  
+   region varchar(50) NULL,  
+   ciudad varchar(60) NULL,
+   oficio varchar(30) null, descripcion varchar(500) null) 
+
+--CREAMOS LA TABLA USUARIOS 
+CREATE TABLE tblUsuario(DNI int Primary KEY not null,
+nombre varchar(60)
+
+)
+
+-- Relacion entre usuario y Trabajos 
+ALTER TABLE tblTrabajos 
+ADD CONSTRAINT FK_trabajo_usuario
+FOREIGN KEY (DNI) REFERENCES tblUsuario(DNI)
+go
+
+select * from tblTrabajos
+
+
+--INSERTAR DATOS A LA TABLA TRABAJOS
+insert into tblTrabajos(correo, pais, region,
+ciudad, oficio, descripcion)
+values('dog@hotmail.com','ARGENTINA','BUENOS AIRES', 'HUANCAYO',
+'CARPINTERO', 'Experiencia en mesas y escritorios diseño tradicional')
+
+update tblTrabajos set pais='Boca',
+region='', ciudad = '', oficio = '',
+descripcion = ''
+  where idTrabajo=1
+  
+ --- AGREGAR correo en la tabla Trabajos
+Alter table tblTrabajos ADD  correo varchar(80) 
+primary key not null;
+
+
+
+
+-------------------------------------------------
+-------------------------------------------------
+---------------------------------------------------
+
+
+SELECT*FROM tblTrabajos 
+
+insert into tblTrabajos(correo, pais, region,
+ciudad, oficio, descripcion)
+values('usuario1@hotmail.com','ARGENTINA','BUENOS AIRES', 'HUANCAYO',
+'CARPINTERO', 'Experiencia en mesas y escritorios diseño tradicional')
+
+
+alter  table tblAlumno
+(IDAlumno int primary key identity(1,1), EDAD INT )
+SELECT*FROM tblAlumno
+
+insert into tblAlumno(EDAD)
+values(20)
+
+ALTER TABLE tblAlumno ADD IDautogenerado2 
+AS (IDAlumno +persona) 
+
+alter  table tblAlumno
+ADD persona nvarchar(50)
+
+insert into tblAlumno(EDAD, persona)
+values(20,'Masculino')
+
+ALTER TABLE tblAlumno ADD IDautogenerado3 
+AS ('T01'+ IDAlumno ) 
+SELECT*FROM tblAlumno
+
+ALTER TABLE tblAlumno ADD IDautogenerado9
+AS ('T001'+ persona ) 
+
+
+
+
+---- PROCEDIMIENTO IDAUTOGENERADO 
+SELECT*FROM tblTrabajos
+----
+alter  table tblAlumno
+(IDAlumno int primary key identity(1,1), EDAD INT )
+
+
+---crear autogenerado  
+ALTER TABLE tblAlumno ADD IDautogenerado
+AS (convert(nvarchar,IDAlumno)+persona) 
+
+SELECT*FROM tblTrabajos
+---
+ALTER TABLE tblTrabajos ADD IDTrabajo
+AS ('T00'+ oficio ) 
+--GENERAR CODIGO
+alter table tblTrabajos ADD IDautogenerado int
+primary key identity(1,1)
+
+---id autogenerado  nueva columna
+ALTER TABLE tblTrabajos ADD IDtrabajo
+AS ('T0'+convert(nvarchar,IDautogenerado)+oficio)
+
+CREATE PROCEDURE modificarTrabajo
+@pais varchar(50), 
+@region varchar(50), 
+@ciudad varchar(60), 
+@oficio varchar(30), 
+@descripcion varchar(500), 
+@IDtrabajo varchar(62) 
+as 
+UPDATE tblTrabajos 
+SET pais=@pais,
+region=@region,
+ciudad=@ciudad,
+oficio=@oficio,
+descripcion=@descripcion 
+where IDtrabajo=@IDtrabajo
+
+select*from tblTrabajos
+
+
+
+
